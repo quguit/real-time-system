@@ -1,6 +1,9 @@
 # real-time-system
  discipline project real-time system
 
+# Objetivo
+ demonstrar o aprendizado em desenvolver, analisar e manter sistemas computacionais com restrição de tempo real, com ênfase em arquiteturas embarcadas
+
 ## First step: Understand the fundamentals, starting with Recommended Reading
 
 - Noergaard, T. Embedded System Architecture: A Comprehensive Guide for Engineers and Programmers. Elsevier, 2005.
