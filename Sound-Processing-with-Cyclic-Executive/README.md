@@ -1,20 +1,17 @@
-Com certeza. Com base na sua nova especificação, preparei um `README.md` detalhado e estruturado em um passo a passo para guiar as duas etapas iniciais do desenvolvimento: a criação da base com o Executivo Cíclico e a implementação da coleta de áudio e detecção de atividade.
-
-Este README pode ser usado diretamente no seu repositório do GitHub.
 
 -----
 
 # Executivo Cíclico para Processamento de Áudio no ESP32
 
-## Objetivo do Projeto
+## Objetivo
 
-Este projeto implementa um sistema de tempo real no ESP32 para análise de áudio. Utilizando a arquitetura de um **Executivo Cíclico**, o sistema captura áudio de um microfone I2S de forma contínua e realiza a detecção de atividade sonora (VAD - Voice Activity Detection).
+Este projeto implementa um sistema de tempo real no ESP32 para análise de áudio. Utilizando a arquitetura de um **Executivo Cíclico**, o sistema captura áudio de um microfone I2S de forma contínua.
 
-A principal característica da arquitetura é o uso de buffers em esquema **ping-pong** gerenciados por um escalonador determinístico, garantindo que nenhuma amostra de áudio seja perdida e que o processamento ocorra em intervalos de tempo previsíveis.
+A principal característica da arquitetura é o uso de buffers em esquema **ping-pong** gerenciados por um escalonador determinístico.
 
 ### Conceitos Chave
 
-  * **Executivo Cíclico:** Um escalonador simples e robusto que executa tarefas em intervalos de tempo fixos, definidos por um "Ciclo Menor". Ideal para sistemas que exigem alta previsibilidade.
+  * **Executivo Cíclico:** Um escalonador que executa tarefas em intervalos de tempo fixos, definidos por um "Ciclo Menor". Ideal para sistemas que exigem alta previsibilidade.
   * **Ping-Pong Buffers:** Um esquema com dois buffers para desacoplar a aquisição de dados do processamento. Enquanto o hardware (via DMA) preenche um buffer ("ping"), o software processa o outro buffer ("pong"), que já está cheio. Ao final do ciclo, os papéis se invertem.
   * **I2S com DMA:** O periférico I2S do ESP32 utiliza Acesso Direto à Memória (DMA) para transferir o áudio do microfone para a RAM sem a intervenção da CPU, liberando o processador para outras tarefas.
 
@@ -22,8 +19,6 @@ A principal característica da arquitetura é o uso de buffers em esquema **ping
 
   * 1x Placa de desenvolvimento ESP32
   * 1x Microfone I2S (ex: INMP441, SPH0645)
-  * 1x LED de qualquer cor
-  * 1x Resistor (ex: 220Ω)
   * Protoboard e jumpers
 
 ## Tarefas de Implementação
@@ -42,11 +37,6 @@ O primeiro passo é preparar o ambiente de desenvolvimento e conectar os compone
           * `SD` (Serial Data) -\> `GPIO 32`
           * `VCC` -\> `3.3V`
           * `GND` -\> `GND`
-      * **LED:**
-          * Anodo (perna maior) -\> Resistor -\> `GPIO 25`
-          * Catodo (perna menor) -\> `GND`
-
-*(Nota: Você pode alterar os pinos de GPIO no código se necessário.)*
 
 ### **Tarefa 2: Implementação da Estrutura do Executivo Cíclico**
 
